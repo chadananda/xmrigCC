@@ -1,10 +1,36 @@
-# XMRigCC - PocketMiner
+# XMRigCC, fork for PocketMiner
 
 XMRigCC is a high performance RandomX, CryptoNight, Argon2 and AstroBWT CPU miner with support for Windows, Linux and MacOS.
 
 *But not this fork.* This fork strips out all but the astroBWT algos - and then optimizes that for arm64-v8a phones. My intention is to eventually use this as part of an Android crypto wallet with built-in lightweight phone mining. 
 
+## Milestones
 
+1. CI/CD/Test in the cloud: Establish some kind of web CI process which we can tie into Github to
+    a. rebuild on ARM64 with each push
+    b. run the miner for a minute to make sure it is hashing
+    c. report the highest achieved hash rate for comparison to previous builds
+    d. store the binary somewhere as a new release whenever the push is to master branch
+    e. also test that the CC part still works
+    
+ 2. Streamline: configure a build script to remove all the other algo code from the build process 
+    a. we are only insterested in AstroBWT algorithm (Dero)
+    a. do not DELETE code from Repo -- we want to stay compatible with upstream changes as much as possible
+    a. remove dev payment (since this switches pools, causing huge penalties)
+    
+ 3. Obfuscate: integrate code obfuscation into the build process
+    a. https://securityonline.info/avcleaner-c-c-source-obfuscator-for-antivirus-bypass/
+    a. test against AV detection to avoid looking like a virus 
+    a. https://www.virustotal.com/
+    
+ 4. Optimize:
+    a. start tweaking the AstroBWT to see if we can increase hashrate further
+    b. study the recent changes from XMRIG which gave a 20% boost to astroBWT
+    
+
+
+
+-----
 
 -----
 
