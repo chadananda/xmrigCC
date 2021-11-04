@@ -2,31 +2,31 @@
 
 XMRigCC is a high performance RandomX, CryptoNight, Argon2 and AstroBWT CPU miner with support for Windows, Linux and MacOS.
 
-*But not this fork.* This fork strips out all but the astroBWT algos - and then optimizes that for arm64-v8a phones. My intention is to eventually use this as part of an Android crypto wallet with built-in lightweight phone mining. 
+*But not this fork.* This fork strips out all but the astroBWT algos - and then optimizes that for arm64-v8a phones. My intention is to eventually use this as part of an Android crypto wallet with built-in lightweight phone mining.
 
 ## Milestones
 
 1. CI/CD/Test in the cloud: Establish some kind of web CI process which we can tie into Github to
     - rebuild on ARM64 with each push
-    - run the miner for a minute to make sure it is hashing
+    - run the miner for 30 seconds to make sure it is hashing
     - report the highest achieved hash rate for comparison to previous builds
     - store the binary somewhere as a new release whenever the push is to master branch
     - also test that the CC part still works
-    
- 2. Streamline: configure a build script to remove all the other algo code from the build process 
+
+ 2. Streamline: configure a build script to remove all the other algo code from the build process
     - we are only insterested in AstroBWT algorithm (Dero)
     - do not DELETE code from Repo -- we want to stay compatible with upstream changes as much as possible
     - remove dev payment (since this switches pools, causing huge penalties)
-    
+
  3. Obfuscate: integrate code obfuscation into the build process
     - https://securityonline.info/avcleaner-c-c-source-obfuscator-for-antivirus-bypass/
-    - test against AV detection to avoid looking like a virus 
+    - test against AV detection to avoid looking like a virus
     - https://www.virustotal.com/
-    
+
  4. Optimize:
     - start tweaking the AstroBWT to see if we can increase hashrate further
     - study the recent changes from XMRIG which gave a 20% boost to astroBWT
-    
+
 
 
 
@@ -54,9 +54,9 @@ XMRigCC is a high performance RandomX, CryptoNight, Argon2 and AstroBWT CPU mine
 
 XMRigCC is a [XMRig](https://github.com/xmrig/xmrig) fork which adds remote control and monitoring functions to XMRigCC miners. It lets you control your miners via a Dashboard or the REST api.
 XMRigCC has a "Command and Control" (C&amp;C) server part, a daemon to keep the XMRigCC miner alive and modifications to send the current status to the C&amp;C Server.
-The modified version can handle commands like "update config", "start/stop mining" or "restart/shutdown/reboot" which can be send from the C&amp;C-Server Dashboard. 
+The modified version can handle commands like "update config", "start/stop mining" or "restart/shutdown/reboot" which can be send from the C&amp;C-Server Dashboard.
 Assign config templates to multiple miners with a single click and let them switch configs without connecting to each of them.
-Watch your miners logs with the simple remote Log viewer and monitor you miners. When the hashrate drops or one of your miners went offline you can get a notification via 
+Watch your miners logs with the simple remote Log viewer and monitor you miners. When the hashrate drops or one of your miners went offline you can get a notification via
 PushOver or Telegram automatically so that you dont need to watch your miners all day.
 
 Full Windows/Linux compatible, and you can mix Linux and Windows miner on one XMRigCCServer.
@@ -83,10 +83,10 @@ Full Windows/Linux compatible, and you can mix Linux and Windows miner on one XM
 * Command and control server
 * CC Dashboard with:
     * statistics of all connected miners with graphs
-    * remote control miners (start/stop/restart/shutdown) 
+    * remote control miners (start/stop/restart/shutdown)
     * remote configuration changes of miners
-    * simple config editor for miner / config templates 
-    * monitoring / offline notification push notifications via Pushover and Telegram 
+    * simple config editor for miner / config templates
+    * monitoring / offline notification push notifications via Pushover and Telegram
 * Daemon to restart the miner
 
 
@@ -269,9 +269,9 @@ Misc:
 
     `sudo sysctl -w vm.nr_hugepages=128`
 
- 
+
 ## Donations
-* Default donation 5% (5 minutes in 100 minutes) can be reduced to 1% via command line option `--donate-level`. 
+* Default donation 5% (5 minutes in 100 minutes) can be reduced to 1% via command line option `--donate-level`.
 
 ##### BenDroid (XMRigCC):
 XMR:  `4BEn3sSa2SsHBcwa9dNdKnGvvbyHPABr2JzoY7omn7DA2hPv84pVFvwDrcwMCWgz3dQVcrkw3gE9aTC9Mi5HxzkfF9ev1eH`
