@@ -1,0 +1,18 @@
+name: arm64aws_build
+
+## self runner C++ build hosted on AWS Arm64
+## see: https://github.com/marketplace/actions/build-c-project
+
+on: [push]
+
+jobs:
+  ubuntu-build:
+    runs-on: ubuntu-latest # this part will be replaced with self-runner on AWS
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2.0.0
+    - name: Build project
+      uses: nicledomaS/cmake_build_action@v1.4
+# more options at: https://github.com/marketplace/actions/build-c-project
+      with:
+        submodule_update: ON
