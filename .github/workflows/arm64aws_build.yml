@@ -11,39 +11,34 @@ jobs:
 
     steps:
 
-    - name: Check CPU
-      run: |
-        echo `lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
-        lscpu
+    - name: CPU Architecture
+      run: lscpu
 
-    - name: Checkout
+    - name: Checkout XMRIGCC fork repository
       uses: actions/checkout@v2.0.0
 
-    - name: Add required build libraries, just in case...
+    - name: Apt install required libraries
       run: |
         sudo apt -y update
-        sudo apt-get -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
+        sudo apt -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
 
+    # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
     - name: Build project
       uses: nicledomaS/cmake_build_action@v1.4
-# cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
       with:
         cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include
         submodule_update: ON
 
-    - name: Locate our binaries
+    - name: Move 3 binaries into 'binaries' directory
       run: |
-        cd ${{github.workspace}}/build/
-        mkdir artifacts/
-        mv xmrig* artifacts/
-        cd artifacts/
-        ls -la
+        mkdir ${{github.workspace}}/build/binaries
+        mv ${{github.workspace}}/build/xmrig* ${{github.workspace}}/build/binaries/
+        ls -la ${{github.workspace}}/build/binaries/
 
-    - name: Upload XMRIGCC artifacts
+    - name: Upload binaries as zipped artifact
       uses: actions/upload-artifact@v1
       with:
-        name: XMRIGCC
-        # path: app/build/outputs/apk/debug/app-debug.apk
-        path: ${{github.workspace}}/build/artifacts
+        name: binaries
+        path: ${{github.workspace}}/build/binaries
 
 
