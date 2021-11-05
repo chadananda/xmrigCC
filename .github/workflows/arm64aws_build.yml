@@ -33,20 +33,16 @@ jobs:
     - name: Locate our new binary artifact
       run: |
         cd ${{github.workspace}}/build/
-        ls -la
         mkdir artifacts/
-        mv xmrigDaemon artifacts/
-        mv xmrigMiner artifacts/
-        mv xmrigServer artifacts/
-# -rwxr-xr-x  1 runner docker  178968 Nov  5 01:26 xmrigDaemon
-# -rwxr-xr-x  1 runner docker 4095912 Nov  5 01:28 xmrigMiner
-# -rwxr-xr-x  1 runner docker 1999008 Nov  5 01:27 xmrigServer
+        mv xmrig* artifacts/
+        cd artifacts/
+        ls -la
 
     - name: Upload XMRIG artifact
       uses: actions/upload-artifact@v1
       with:
         name: XMRIGCC
         # path: app/build/outputs/apk/debug/app-debug.apk
-        path: {{github.workspace}}/build/artifacts
+        path: ${{github.workspace}}/build/artifacts
 
 
