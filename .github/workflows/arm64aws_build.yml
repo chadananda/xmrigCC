@@ -14,7 +14,7 @@ jobs:
     - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}     lscpu -p=cpu | grep -v ^#
       run: |
         ARCH=`lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
-        echo $ARCH
+        echo ${{ echo $ARCH }}
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
