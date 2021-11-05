@@ -12,8 +12,6 @@ jobs:
     steps:
 
     - name: Check CPU
-      env:
-        ARCHITECTURE: 'x64' #x86 for github hosted runner
       run: |
         echo `lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
         lscpu
@@ -28,7 +26,7 @@ jobs:
       uses: nicledomaS/cmake_build_action@v1.4
 # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
       with:
-        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/${{env.ARCHITECTURE}}/include
+        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include
         submodule_update: ON
 
     - name: Locate our binaries
