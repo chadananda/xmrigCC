@@ -51,23 +51,19 @@ jobs:
         path: ${{github.workspace}}/build/binaries
 
     - name: 8. Create a release
-      id: create_release
       uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided by Actions
+      id: create_release
       with:
+        draft: false
+        prerelease: false
+        release_name: binary ${{ github.ref }} - ${{ env.build_size }}
         tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }} - ${{ env.build_size }}
         body: |
           Changes in this Release:
           - binary size: ${{ env.build_size }}
           - hashrate: ${{ env.hashrate }}
-        draft: false
-        prerelease: true
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./bin/arm64miner.tar.gz
-        asset_name: arm64miner.tar.gz
-        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
 
     - name: 9. Upload release artifacts
       uses: actions/upload-release-asset@v1
