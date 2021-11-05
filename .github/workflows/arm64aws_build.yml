@@ -50,17 +50,7 @@ jobs:
         name: binaries.zip
         path: ${{github.workspace}}/build/binaries
 
-    - name: 8. Upload artifacts for release
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ github.token }} # Provided by Actions
-      with:
-        upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./bin/arm64miner.tar.gz
-        asset_name: arm64miner.tar.gz
-        asset_content_type: application/gzip
-
-    - name: 9. Create a release
+    - name: 8. Create a release
       id: create_release
       uses: actions/create-release@v1
       env:
@@ -78,5 +68,17 @@ jobs:
         asset_path: ./bin/arm64miner.tar.gz
         asset_name: arm64miner.tar.gz
         asset_content_type: application/zip
+
+    - name: 9. Upload release artifacts
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }} # Provided by Actions
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/arm64miner.tar.gz
+        asset_name: arm64miner.tar.gz
+        asset_content_type: application/gzip
+
+
 
 
