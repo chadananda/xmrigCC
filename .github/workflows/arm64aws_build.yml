@@ -45,8 +45,6 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/binaries/ && ls -la
         sudo chmod +x ./xmrigMiner
-        timeout 45 sleep 50 | ./xmrigMiner -o gulf.moneroocean.stream:20128 -u 72f74433f00c4b3c38df1dc926046a03e692b0770fded4da65ed49e0900471c9 --tls -k --coin dero -a astrobwt --daemonized
-        RET=${PIPESTATUS[0]}
-        echo $RET
+        timeout 45 ./xmrigMiner -o gulf.moneroocean.stream:20128 -u 72f74433f00c4b3c38df1dc926046a03e692b0770fded4da65ed49e0900471c9 --tls -k --coin dero -a astrobwt --daemonized
 
 
