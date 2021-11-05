@@ -54,10 +54,10 @@ jobs:
       uses: actions/create-release@v1
       id: create_release
       with:
-        draft: false
+        draft: true
         prerelease: false
-        release_name: binary ${{ github.ref }} - ${{ env.build_size }}
-        tag_name: ${{ github.ref }}
+        release_name: binary {{ github.run_number }} - ${{ env.build_size }}
+        tag_name: {{ github.run_number }}
         body: |
           Changes in this Release:
           - binary size: ${{ env.build_size }}
