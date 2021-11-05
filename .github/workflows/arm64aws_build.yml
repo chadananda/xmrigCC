@@ -13,7 +13,7 @@ jobs:
 
     - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}     lscpu -p=cpu | grep -v ^#
       run: |
-        setenv architecture `lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
+        export architecture=`lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
         echo ${{ env.architecture }}
 
     - name: Checkout
