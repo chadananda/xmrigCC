@@ -34,9 +34,9 @@ jobs:
         cd ${{github.workspace}}/build/
         ls -la
         mkdir artifacts
-        mv xmrigDaemon xmrigcc/
-        mv xmrigMiner xmrigcc/
-        mv xmrigServer xmrigcc/
+        mv xmrigDaemon artifacts/
+        mv xmrigMiner artifacts/
+        mv xmrigServer artifacts/
 
 # -rwxr-xr-x  1 runner docker  178968 Nov  5 01:26 xmrigDaemon
 # -rwxr-xr-x  1 runner docker 4095912 Nov  5 01:28 xmrigMiner
