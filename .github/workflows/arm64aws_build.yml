@@ -73,7 +73,7 @@ jobs:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{github.workspace}}/build/binaries/xmrigMiner
         asset_name: xmrigMiner
-        # asset_content_type: application/gzip
+        asset_content_type: application/x-executable
 
 
 
