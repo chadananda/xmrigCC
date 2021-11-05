@@ -13,7 +13,7 @@ jobs:
       uses: actions/checkout@v2.0.0
     - name: Check for dependencies
       run: |
-        cd ${{ github.workspace }}
+        cd ${{ github.workspace }}/xmrig-deps/gcc/x86
         pwd
         ls -la
     - name: Build project
