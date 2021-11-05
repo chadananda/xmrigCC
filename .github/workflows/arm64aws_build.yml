@@ -11,10 +11,9 @@ jobs:
 
     steps:
 
-    - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}
+    - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}     lscpu -p=cpu | grep -v ^#
       run: |
       lscpu
-      lscpu -p=cpu | grep -v ^#
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
