@@ -12,8 +12,8 @@ jobs:
     steps:
 
     - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}     lscpu -p=cpu | grep -v ^#
-      run: bash |
-        SET ARCH=lscpu | sed -n 's/^Architecture: *//p'
+      run: |
+        bash SET ARCH=lscpu | sed -n 's/^Architecture: *//p'
         echo $ARCH
 
 
