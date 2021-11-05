@@ -26,8 +26,9 @@ jobs:
 
     - name: Locate our new binary artifact
       run: |
-        cd xmrigcc/xmrigcc/build/
+        cd ${{github.workspace}}/xmrigcc/xmrigcc/build/
         ls -la
+        echo System.getProperty("os.arch")
 
     - name: Upload XMRIG artifact
       uses: actions/upload-artifact@v1
