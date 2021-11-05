@@ -43,14 +43,24 @@ jobs:
     #     CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=200 --print-time=10 --daemonized '
     #     sudo timeout 2m ./xmrigMiner $CONFIG
 
-    # - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
-    #   id: xmrigcc-binaries
-    #   uses: actions/upload-artifact@v1
-    #   with:
-    #     name: binaries_${{ env.build_size }}
-    #     path: ${{github.workspace}}/build/binaries
+    - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
+      id: xmrigcc-binaries
+      uses: actions/upload-artifact@v1
+      with:
+        name: binaries.zip
+        path: ${{github.workspace}}/build/binaries
 
-    - name: 7. Create Release
+    - name: 8. Upload artifacts for release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }} # Provided by Actions
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/arm64miner.tar.gz
+        asset_name: arm64miner.tar.gz
+        asset_content_type: application/gzip
+
+    - name: 9. Create a release
       id: xmrigcc_binaries_release
       uses: actions/create-release@v1
       env:
@@ -64,6 +74,9 @@ jobs:
           - hashrate: ${{ env.hashrate }}
         draft: false
         prerelease: true
-
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ./bin/arm64miner.tar.gz
+        asset_name: arm64miner.tar.gz
+        asset_content_type: application/zip
 
 
