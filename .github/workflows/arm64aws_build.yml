@@ -11,10 +11,11 @@ jobs:
 
     steps:
 
-    - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}     lscpu -p=cpu | grep -v ^#
+    - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}
+      env:
+        ARCHITECTURE: 'x86'
       run: |
-        export architecture=`lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
-        echo ${{ env.architecture }}
+        echo `lscpu | sed -n 's/^Architecture: *//p' |cut -d'_' -f 1`
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -24,9 +25,9 @@ jobs:
 
     - name: Build project
       uses: nicledomaS/cmake_build_action@v1.4
-       # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
+# cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
       with:
-        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x86/include
+        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/${{env.ARCHITECTURE}}/include
         submodule_update: ON
 
     - name: Locate our new binary artifact
@@ -37,7 +38,6 @@ jobs:
         mv xmrigDaemon artifacts/
         mv xmrigMiner artifacts/
         mv xmrigServer artifacts/
-
 # -rwxr-xr-x  1 runner docker  178968 Nov  5 01:26 xmrigDaemon
 # -rwxr-xr-x  1 runner docker 4095912 Nov  5 01:28 xmrigMiner
 # -rwxr-xr-x  1 runner docker 1999008 Nov  5 01:27 xmrigServer
