@@ -30,7 +30,7 @@ jobs:
         cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/${{env.ARCHITECTURE}}/include
         submodule_update: ON
 
-    - name: Locate our new binary artifact
+    - name: Locate our binaries
       run: |
         cd ${{github.workspace}}/build/
         mkdir artifacts/
@@ -38,7 +38,7 @@ jobs:
         cd artifacts/
         ls -la
 
-    - name: Upload XMRIG artifact
+    - name: Upload XMRIGCC artifacts
       uses: actions/upload-artifact@v1
       with:
         name: XMRIGCC
