@@ -61,7 +61,7 @@ jobs:
         asset_content_type: application/gzip
 
     - name: 9. Create a release
-      id: xmrigcc_binaries_release
+      id: create_release
       uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided by Actions
@@ -69,7 +69,7 @@ jobs:
         tag_name: ${{ github.ref }}
         release_name: Release ${{ github.ref }} - ${{ env.build_size }}
         body: |
-          Changes in this Release
+          Changes in this Release:
           - binary size: ${{ env.build_size }}
           - hashrate: ${{ env.hashrate }}
         draft: false
