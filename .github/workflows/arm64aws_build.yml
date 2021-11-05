@@ -42,9 +42,8 @@ jobs:
 
     - name: Run xmrigMiner for 15 seconds to see if it works
       run: |
-        cd ${{github.workspace}}/build/binaries/
-        pwd && ls -la
+        cd ${{github.workspace}}/build/binaries/ && ls -la
         sudo chmod +x ./xmrigMiner
-        timeout 15 xmrigMiner -o gulf.moneroocean.stream:10032 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt
+        timeout 15 ./xmrigMiner -o gulf.moneroocean.stream:10032 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt
 
 
