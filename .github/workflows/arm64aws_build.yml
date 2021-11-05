@@ -12,7 +12,7 @@ jobs:
     steps:
 
     - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}     lscpu -p=cpu | grep -v ^#
-      run: lscpu | grep "Architecture" | cut -d":" -f 2
+      run: echo lscpu | sed -n 's/^Architecture: *//p'
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
@@ -31,12 +31,20 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/
         ls -la
+        mkdir artifacts
+        mv xmrigDaemon xmrigcc/
+        mv xmrigMiner xmrigcc/
+        mv xmrigServer xmrigcc/
+
+# -rwxr-xr-x  1 runner docker  178968 Nov  5 01:26 xmrigDaemon
+# -rwxr-xr-x  1 runner docker 4095912 Nov  5 01:28 xmrigMiner
+# -rwxr-xr-x  1 runner docker 1999008 Nov  5 01:27 xmrigServer
 
     - name: Upload XMRIG artifact
       uses: actions/upload-artifact@v1
       with:
         name: XMRIGCC
         # path: app/build/outputs/apk/debug/app-debug.apk
-        path: xmrigcc/xmrigcc/build/xmrigcc
+        path: xmrigcc/xmrigcc/build/artifacts
 
 
