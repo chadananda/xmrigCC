@@ -33,8 +33,7 @@ jobs:
     - name: Gather binaries into 'build/binaries/' directory
       run: |
         cd ${{github.workspace}}/build/ && mkdir binaries/
-        mv xmrig* binaries/ && ls -la binaries/ && du -sh ./xmrigMiner
-
+        mv xmrig* binaries/ && ls -la binaries/ && du -sh binaries/xmrigMiner
 
     - name: Run xmrigMiner for 2 minutes to see if it works
       run: |
