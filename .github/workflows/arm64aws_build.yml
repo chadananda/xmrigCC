@@ -12,7 +12,7 @@ jobs:
     steps:
 
     - name: Check CPU
-      run: echo ${{System.getProperty("os.arch")}}
+      run: echo `${{System.getProperty("os.arch")}}`
       # if: ${{ env.DAY_OF_WEEK == 'Mon' }}
 
     - name: Checkout
