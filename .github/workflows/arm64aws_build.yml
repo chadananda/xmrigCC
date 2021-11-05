@@ -15,5 +15,5 @@ jobs:
       uses: nicledomaS/cmake_build_action@v1.4
 # more options at: https://github.com/marketplace/actions/build-c-project
       with:
-        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{ github.workspace }}/xmrigCC/xmrig-deps/gcc/x86
+        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{ github.workspace }}/xmrig-deps/gcc/x86
         submodule_update: ON
