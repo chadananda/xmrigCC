@@ -22,7 +22,7 @@ jobs:
     - name: Add required build libraries, just in case...
       run: |
         sudo apt -y update
-        sudo apt-get -y install libuv1-dev build-essential cmake libmicrohttpd-dev
+        sudo apt-get -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
 
     - name: Build project
       uses: nicledomaS/cmake_build_action@v1.4
