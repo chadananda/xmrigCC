@@ -29,16 +29,18 @@ jobs:
         cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include
         submodule_update: ON
 
-    - name: Gather and Upload binaries as zipped artifact
+    - name: Gather binaries into a 'build/binaries/' directory
       run: |
         cd ${{github.workspace}}/build/ && mkdir binaries/
         mv xmrig* binaries/ && ls -la binaries/
+
+    - name: Upload binaries as zipped artifact
       uses: actions/upload-artifact@v1
       with:
         name: binaries
         path: ${{github.workspace}}/build/binaries
 
-    - name: Run xmrigMiner for a few seconds to see if it works
+    - name: Run xmrigMiner for 15 seconds to see if it works
       run: |
         cd ${{github.workspace}}/build/binaries
         sudo chmod +x xmrigMiner
