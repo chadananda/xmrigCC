@@ -11,9 +11,10 @@ jobs:
 
     steps:
 
-    - name: Check CPU
-      run: echo `${{System.getProperty("os.arch")}}`
-      # if: ${{ env.DAY_OF_WEEK == 'Mon' }}
+    - name: Check CPU   # if: ${{ env.DAY_OF_WEEK == 'Mon' }}
+      run: |
+      lscpu
+      lscpu -p=cpu | grep -v ^#
 
     - name: Checkout
       uses: actions/checkout@v2.0.0
