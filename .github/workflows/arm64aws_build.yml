@@ -51,19 +51,19 @@ jobs:
     #     path: ${{github.workspace}}/build/binaries
 
     - name: 7. Create Release
-        id: xmrigcc_binaries_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided by Actions
-        with:
-          tag_name: ${{ github.ref }}
-          release_name: Release ${{ github.ref }} - ${{ env.build_size }}
-          body: |
-            Changes in this Release
-            - binary size: ${{ env.build_size }}
-            - hashrate: ${{ env.hashrate }}
-          draft: false
-          prerelease: true
+      id: xmrigcc_binaries_release
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # Provided by Actions
+      with:
+        tag_name: ${{ github.ref }}
+        release_name: Release ${{ github.ref }} - ${{ env.build_size }}
+        body: |
+          Changes in this Release
+          - binary size: ${{ env.build_size }}
+          - hashrate: ${{ env.hashrate }}
+        draft: false
+        prerelease: true
 
 
 
