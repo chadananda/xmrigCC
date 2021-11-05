@@ -11,6 +11,10 @@ jobs:
 
     steps:
 
+    - name: Check CPU
+      run: echo System.getProperty("os.arch")
+      # if: ${{ env.DAY_OF_WEEK == 'Mon' }}
+
     - name: Checkout
       uses: actions/checkout@v2.0.0
 
@@ -26,9 +30,8 @@ jobs:
 
     - name: Locate our new binary artifact
       run: |
-        cd ${{github.workspace}}/xmrigcc/xmrigcc/build/
+        cd ${{github.workspace}}/build/
         ls -la
-        echo System.getProperty("os.arch")
 
     - name: Upload XMRIG artifact
       uses: actions/upload-artifact@v1
