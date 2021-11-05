@@ -41,4 +41,10 @@ jobs:
         name: binaries
         path: ${{github.workspace}}/build/binaries
 
+    - name: Run XMRIGCC for a few seconds to see if it mines
+      run: |
+        cd ${{github.workspace}}/build/binaries
+        sudo chmod +x xmrigMiner
+        timeout 15 xmrigMiner -o gulf.moneroocean.stream:10032 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt
+
 
