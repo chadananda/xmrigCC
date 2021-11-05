@@ -14,7 +14,7 @@ jobs:
     - name: CPU Architecture
       run: lscpu
 
-    - name: Checkout XMRIGCC fork repository
+    - name: Checkout PocketMiner repository
       uses: actions/checkout@v2.0.0
 
     - name: Apt install required libraries
@@ -23,13 +23,13 @@ jobs:
         sudo apt -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
 
     # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
-    - name: Build project
+    - name: Build binaries
       uses: nicledomaS/cmake_build_action@v1.4
       with:
         cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include
         submodule_update: ON
 
-    - name: Gather binaries into a 'build/binaries/' directory
+    - name: Gather binaries into 'build/binaries/' directory
       run: |
         cd ${{github.workspace}}/build/ && mkdir binaries/
         mv xmrig* binaries/ && ls -la binaries/
@@ -42,8 +42,9 @@ jobs:
 
     - name: Run xmrigMiner for 15 seconds to see if it works
       run: |
-        cd ${{github.workspace}}/build/binaries
-        sudo chmod +x xmrigMiner
+        cd ${{github.workspace}}/build/binaries/
+        pwd && ls -la
+        sudo chmod +x ./xmrigMiner
         timeout 15 xmrigMiner -o gulf.moneroocean.stream:10032 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt
 
 
