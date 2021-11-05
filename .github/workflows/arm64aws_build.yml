@@ -34,7 +34,7 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/
         ls -la
-        mkdir artifacts
+        mkdir artifacts/
         mv xmrigDaemon artifacts/
         mv xmrigMiner artifacts/
         mv xmrigServer artifacts/
@@ -47,6 +47,6 @@ jobs:
       with:
         name: XMRIGCC
         # path: app/build/outputs/apk/debug/app-debug.apk
-        path: xmrigcc/xmrigcc/build/artifacts
+        path: {{github.workspace}}/build/artifacts
 
 
