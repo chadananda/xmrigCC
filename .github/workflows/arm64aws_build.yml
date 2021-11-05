@@ -8,20 +8,32 @@ on: [push]
 jobs:
   project-build:
     runs-on: ubuntu-latest # this part will be replaced with self-runner on AWS
+
     steps:
+
     - name: Checkout
       uses: actions/checkout@v2.0.0
-    - name: Check for dependencies
-      run: |
-        cd ${{ github.workspace }}/xmrig-deps/gcc/x86/include
-        pwd
-        ls -la
-    - name: Add build libraries
-      run: |
-        sudo apt-get install libuv1-dev
+
+    - name: Add required build library
+      run: sudo apt-get install libuv1-dev
+
     - name: Build project
       uses: nicledomaS/cmake_build_action@v1.4
-# more options at: https://github.com/marketplace/actions/build-c-project
+       # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
       with:
-        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{ github.workspace }}/xmrig-deps/gcc/x86/include
+        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_ARGON2=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x86/include
         submodule_update: ON
+
+    - name: Locate our new binary artifact
+      run: |
+        cd xmrigcc/xmrigcc/build/
+        ls -la
+
+    - name: Upload XMRIG artifact
+      uses: actions/upload-artifact@v1
+      with:
+        name: XMRIGCC
+        # path: app/build/outputs/apk/debug/app-debug.apk
+        path: xmrigcc/xmrigcc/build/xmrigcc
+
+
