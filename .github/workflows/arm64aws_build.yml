@@ -11,38 +11,38 @@ jobs:
 
     steps:
 
-    - name: Show CPU Architecture
+    - name: 1. Show CPU Architecture
       run: lscpu
 
-    - name: Checkout this branch of PocketMiner
+    - name: 2. Checkout this branch of PocketMiner
       uses: actions/checkout@v2.0.0
 
-    - name: Apt install required libraries
+    - name: 3. Apt install required libraries
       run: |
         sudo apt -y update
         sudo apt -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
 
     # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
     # replace this with a manual cmake process which customizes the build
-    - name: Build binaries
+    - name: 4. Build binaries
       uses: nicledomaS/cmake_build_action@v1.4
       with:
         cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include;-DWITH_CN_LITE=OFF;-DWITH_CN_HEAVY=OFF;-DWITH_CN_PICO=OFF;-DWITH_CN_FEMTO=OFF;-DWITH_RANDOMX=OFF;-DWITH_ARGON2=OFF;-DWITH_KAWPOW=OFF;-DWITH_SECURE_JIT=ON;-DARM_TARGET=8
         submodule_update: ON
 
-    - name: Gather binaries into 'build/binaries/' directory
+    - name: 5. Gather binaries into 'build/binaries/' directory
       run: |
         cd ${{github.workspace}}/build/ && mkdir binaries/
         mv xmrig* binaries/ && ls -la binaries/ && du -sh binaries/xmrigMiner
 
-    - name: Run xmrigMiner for 2 minutes to see if it works
+    - name: 6. Run xmrigMiner for 2 minutes to see if it works
       run: |
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
         CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=200 --print-time=10 --daemonized '
         sudo timeout 2m ./xmrigMiner $CONFIG
 
-    - name: Upload binaries as zipped artifact
+    - name: 7. Upload binaries as zipped artifact
       uses: actions/upload-artifact@v1
       with:
         name: binaries
