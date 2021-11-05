@@ -57,7 +57,7 @@ jobs:
       with:
         draft: true
         prerelease: false
-        release_name: \#${{ github.run_number }} - ${{ env.build_size }}
+        release_name: "#${{ github.run_number }} - ${{ env.build_size }}"
         tag_name: ${{ github.run_number }}
         body: |
           Changes in this Release:
