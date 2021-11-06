@@ -45,7 +45,10 @@ jobs:
         timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
         # echo "\n it's working:" && ls -la output.txt && cat output.txt
         line=`grep "max" output.txt | tail -1`
-        echo `${line##*max}`
+
+
+        echo "${line##*max}"
+
         # echo "hashrate=`${line##*max}`" >> $GITHUB_ENV
         # echo $hashrate
         rm output.txt
