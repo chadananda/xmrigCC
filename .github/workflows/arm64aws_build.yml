@@ -47,9 +47,9 @@ jobs:
         line=`grep "max" output.txt | tail -1`
 
 
-        echo "${line##*max}"
+        echo "hashrate=`${line##*max}`" >> $GITHUB_ENV
 
-        # echo "hashrate=`${line##*max}`" >> $GITHUB_ENV
+        # echo "hashrate=`${line##*max}`"
         # echo $hashrate
         rm output.txt
         # core.setFailed("cancelling workflow")
