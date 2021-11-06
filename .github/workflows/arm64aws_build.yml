@@ -37,14 +37,14 @@ jobs:
         cd binaries/
         echo "build_size=`du -sh xmrigMiner | sed 's/xmrigMiner//'`" >> $GITHUB_ENV
 
-    - name: 6. Run xmrigMiner for 2 minutes to see if it works
+    - name: 6. Run xmrigMiner for 1 minute to see if it works
       run: |
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
         CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=250 --print-time=10 --daemonized '
-        touch output
         timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output
-        echo "let's see if we have output:" && ls -la output && cat output
+        echo "let's see if we have output:" && ls -la output
+
 
     - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
       id: xmrigcc-binaries
