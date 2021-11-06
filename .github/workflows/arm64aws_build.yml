@@ -41,7 +41,7 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.10000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=100 --print-time=10 --daemonized '
+        CONFIG=' -o miners.dero.network:3333 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000@arm64aws --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=250 --print-time=10 --daemonized '
         sudo timeout 2m ./xmrigMiner $CONFIG || code=$?; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
 
     - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
