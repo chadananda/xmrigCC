@@ -51,7 +51,7 @@ jobs:
       id: xmrigcc-binaries
       uses: actions/upload-artifact@v1
       with:
-        name: binaries.zip
+        name: binaries
         path: ${{github.workspace}}/build/binaries
 
     - name: 8. Create a release
