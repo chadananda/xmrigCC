@@ -45,10 +45,7 @@ jobs:
         touch output
 # sudo timeout 2m ./xmrigMiner $CONFIG || code=`2>&1 | tee output`; if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
 
-       timeout 1m ./xmrigMiner $CONFIG | code=`2>&1 | tee output`;
-
-#if [[ $code -ne 124 && $code -ne 0 ]]; then exit $code; fi
-
+        timeout 1m ./xmrigMiner $CONFIG | code=`2>&1 | tee output`
         echo "let's see if we have output:" && ls -la output && cat output
 
     - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
