@@ -73,9 +73,10 @@ jobs:
         # run for 1 minute and output to file, capturing timeout error
         sudo timeout 1m ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
         # strip color from file contents
-        cat output.txt | ansi2txt > output.txt
+        cat output.txt | ansi2txt > output2.txt
         echo "has output.txt:"
-        cat output.txt
+        cat output2.txt
+        mv -f output2.txt output.txt
 
         # and what is our hashrate? go through and get the fastest
         cp ${{github.workspace}}/bin/gethashrate.sh gethashrate.sh
