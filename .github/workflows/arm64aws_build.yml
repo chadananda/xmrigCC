@@ -74,9 +74,12 @@ jobs:
         sudo timeout 1m ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
         # strip color from file contents
         cat output.txt | ansi2txt > output.txt
+        echo "has output.txt:"
+        cat output.txt
 
         # and what is our hashrate? go through and get the fastest
         cp ${{github.workspace}}/bin/gethashrate.sh gethashrate.sh
+        hashrate=`./gethashrate.sh`
         echo "hashrate=`./gethashrate.sh`" >> $GITHUB_ENV
         # hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
         if [[ -z "$hashrate" ]]; then
