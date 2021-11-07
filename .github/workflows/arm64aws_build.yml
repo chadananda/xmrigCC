@@ -46,9 +46,9 @@ jobs:
         timeout 3m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
         # fail if no "accepted" line found
         # accepted=`grep "accepted" output.txt`
-        if [[ -z "$accepted" ]]; then
-          echo "No 'accepted' line found" && exit 1
-        fi
+        # if [[ -z "$accepted" ]]; then
+        #   echo "No 'accepted' line found" && exit 1
+        # fi
         # and what is our hashrate?
         hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
         if [[ -z "$hashrate" ]]; then
