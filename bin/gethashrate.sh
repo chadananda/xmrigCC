@@ -7,7 +7,7 @@ TEMP2=0
 I=output.txt
 
 while read LINE; do
-	if [[ $LINE =~ "miner" ]]
+	if [[ $LINE =~ "miner" && $LINE =~ "speed" && $LINE =~ "max" ]]
 	then
 		MY_ARRAY=($LINE)
 
