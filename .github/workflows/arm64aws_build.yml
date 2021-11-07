@@ -58,7 +58,15 @@ jobs:
       run: |
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --huge-pages=true --huge-pages-jit=TRUE --astrobwt-max-size=1000 --memory-pool=FALSE --print-time=10 --daemonized --no-color'
+
+        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --huge-pages=true --huge-pages-jit=TRUE --astrobwt-max-size=1000 --print-time=5 --daemonized --no-color'
+
+        # ./xmrigMiner: unrecognized option '--pause-on-battery' (6.3.1+)
+        # ./xmrigMiner: unrecognized option '--huge-pages=true'
+        # ./xmrigMiner: unrecognized option '--huge-pages-jit=TRUE'
+
+        # first show the xmrig version
+        echo "xmrig_version=`./xmrigMiner --version`"" >> $GITHUB_ENV
 
         # run for 1 minute and output to file, capturing timeout error
         sudo timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
@@ -93,8 +101,10 @@ jobs:
         tag_name: ${{ github.run_number }}
         body: |
           Release: ${{ github.event.head_commit.message }}
-          - binary size: ${{ env.build_size }}
           - hashrate: ${{ env.hashrate }}
+          - size: ${{ env.build_size }}
+          - XMRIG ver: ${{ env.xmrig_version }}
+
       env:
         GITHUB_TOKEN: ${{ github.token }}
 
