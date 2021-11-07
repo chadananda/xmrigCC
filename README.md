@@ -1,8 +1,8 @@
 # XMRigCC, fork for PocketMiner
 
-XMRigCC is a high performance RandomX, CryptoNight, Argon2 and AstroBWT CPU miner with support for Windows, Linux and MacOS.
+*XMRigCC is a high performance RandomX, CryptoNight, Argon2 and AstroBWT CPU miner with support for Windows, Linux and MacOS.*
 
-*But not this fork.* This fork strips out all but the astroBWT algos - and then optimizes that for arm64-v8a phones. My intention is to eventually use this as part of an Android crypto wallet with built-in lightweight phone mining.
+***But not this fork.***  :sunglasses: This fork builds without anything but astroBWT algos - and then optimizes that for arm64-v8a phones. The intention is to use this as part of an Android crypto wallet with built-in lightweight phone-mining.
 
 ## Milestones
 
