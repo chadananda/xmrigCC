@@ -11,7 +11,7 @@ jobs:
 
     steps:
 
-    - name: 1. Show CPU architecture & setup swap
+    - name: 1. Show CPU architecture & setup swap dir
       run: |
         lscpu    `# show cpu`
         hasswap=`sudo swapon --show`
@@ -60,7 +60,13 @@ jobs:
         if [[ -z "$hashrate" ]]; then
           echo "No hash activity found" && exit 1
         fi
-        echo "hashrate=$hashrate" >> $GITHUB_ENV
+        # get the fastest hashrate in the filew
+        cp ${{github.workspace}}/bin/gethashrate.sh .
+        echo "Hashrate: `./gethashrate.sh`
+        echo "hashrate=`./gethashrate.sh`" >> $GITHUB_ENV
+        # clean up files from binary archive
+        rm output.txt
+        rm gethashrate.sh
 
     - name: 7. Upload binaries as zipped artifact
       id: xmrigcc-binaries
