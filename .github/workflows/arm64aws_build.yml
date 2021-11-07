@@ -37,24 +37,23 @@ jobs:
         cd binaries/
         echo "build_size=`du -sh xmrigMiner | sed 's/xmrigMiner//'`" >> $GITHUB_ENV
 
-    - name: 6. Run xmrigMiner for 1 minute to see if it works
+    - name: 6. Run xmrigMiner for 1.5 minute to see if it works
       run: |
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
         CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=250 --print-time=10 --daemonized --no-color'
-        timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
 
-        #echo "\n it's working:" && ls -la output.txt && cat output.txt
-        line=`grep "max" output.txt | tail -1`
-        line=${line##*max}
-        echo $line
-        echo "hashrate=$line" >> $GITHUB_ENV
-        echo ${{ env.hashrate }}
+        # run for 90 seconds and output to file, capturing timeout error
+        timeout 90s ./xmrigMiner $CONFIG 2>&1 | tee output.txt
 
-        # echo "hashrate=`${line##*max}`"
-        # echo $hashrate
-        rm output.txt
-        # core.setFailed("cancelling workflow")
+        # fail if no "accepted" line found
+        accepted=`grep "accepted" output.txt`
+        if [[ -z "$accepted" ]] then core.setFailed("Failed to get accepted hashes!")
+
+        # and what is our hashrate?
+        hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
+        if [[ -z "$hashrate" ]] then core.setFailed("Failed to get a hashrate!")
+        echo "hashrate=$hashrate" >> $GITHUB_ENV
 
     - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
       id: xmrigcc-binaries
