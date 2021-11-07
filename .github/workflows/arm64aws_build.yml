@@ -27,7 +27,7 @@ jobs:
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
-          sudo sysctl vm.swappiness=60   `# set way below default 60, (avoid swap)`
+          sudo sysctl vm.swappiness=10   `# set way below default 60, (avoid swap)`
         fi
         sudo swapon --show
 
@@ -75,7 +75,7 @@ jobs:
         # strip color from file contents
         cat output.txt | ansi2txt > output2.txt
         echo "has output.txt:"
-        cat output2.txt
+        # cat output2.txt
         mv -f output2.txt output.txt
 
         # and what is our hashrate? go through and get the fastest
@@ -111,7 +111,6 @@ jobs:
           Release: ${{ github.event.head_commit.message }}
           - hashrate: ${{ env.hashrate }}
           - size: ${{ env.build_size }}
-          - XMRIG ver: ${{ env.xmrigver }}
 
       env:
         GITHUB_TOKEN: ${{ github.token }}
