@@ -17,7 +17,7 @@ jobs:
         hasswap=`sudo swapon --show`
         if [[ -z "$hasswap" ]]; then
           echo "** No swap space found, setting up swap directory."
-          sudo fallocate -l 100M /swapfile
+          sudo fallocate -l 250M /swapfile
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
@@ -77,7 +77,7 @@ jobs:
         release_name: "#${{ github.run_number }} - ${{ env.build_size }}"
         tag_name: ${{ github.run_number }}
         body: |
-          Changes in this Release:
+          Release: ${{ github.event.head_commit.message }}
           - binary size: ${{ env.build_size }}
           - hashrate: ${{ env.hashrate }}
       env:
