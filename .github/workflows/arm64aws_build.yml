@@ -86,8 +86,8 @@ jobs:
         rm gethashrate.sh
 
         # experiment running benchmark
-        echo ''
-        sudo ./xmrigMiner $CONFIG --daemonized --bench=1
+        # echo ''
+        # sudo ./xmrigMiner $CONFIG --daemonized --bench=1
 
     - name: 7. Upload binaries as zipped artifact
       id: xmrigcc-binaries
