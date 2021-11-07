@@ -46,12 +46,14 @@ jobs:
         timeout 2m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
         # fail if no "accepted" line found
         # accepted=`grep "accepted" output.txt`
-        # if [[ -z "$accepted" ]]; then; core.setFailed("Failed to get accepted hashes!")
+        if [[ -z "$accepted" ]]; then
+          echo "No 'accepted' line found" && exit 1
+        fi
 
         # and what is our hashrate?
         hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
         if [[ -z "$hashrate" ]]; then
-          exit 1
+          echo "No hash activity found" && exit 1
         fi
         echo "hashrate=$hashrate" >> $GITHUB_ENV
 
