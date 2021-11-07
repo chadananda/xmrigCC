@@ -47,7 +47,9 @@ jobs:
         #echo "\n it's working:" && ls -la output.txt && cat output.txt
         line=`grep "max" output.txt | tail -1`
         line=${line##*max}
+        echo $line
         echo "hashrate=$line" >> $GITHUB_ENV
+        echo ${{ env.hashrate }}
 
         # echo "hashrate=`${line##*max}`"
         # echo $hashrate
