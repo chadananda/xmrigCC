@@ -51,7 +51,7 @@ jobs:
         # and what is our hashrate?
         hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
         if [[ -z "$hashrate" ]]; then
-          core.setFailed("Failed to get a hashrate!")
+          exit 1
         fi
         echo "hashrate=$hashrate" >> $GITHUB_ENV
 
