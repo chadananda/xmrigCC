@@ -7,25 +7,30 @@ XMRigCC is a high performance RandomX, CryptoNight, Argon2 and AstroBWT CPU mine
 ## Milestones
 
 1. CI/CD/Test in the cloud: Establish some kind of web CI process which we can tie into Github to
-    - rebuild on ARM64 with each push
-    - run the miner for 30 seconds to make sure it is hashing
-    - report the highest achieved hash rate for comparison to previous builds
-    - store the binary somewhere as a new release whenever the push is to master branch
-    - also test that the CC part still works
+    - [x] rebuild on ARM64 with each push
+    - [x] run the miner for 1-2 minutes to make sure it is hashing
+    - [x] report the highest achieved hash rate for comparison to previous builds
+    - [x] store the binary sas a new release with details
+    - [ ] also test that the CC part still works
 
- 2. Streamline: configure a build script to remove all the other algo code from the build process
-    - we are only insterested in AstroBWT algorithm (Dero)
-    - do not DELETE code from Repo -- we want to stay compatible with upstream changes as much as possible
-    - remove dev payment (since this switches pools, causing huge penalties)
+2. Streamline: configure a build script to remove all the other algo code from the build process
+    - [x] we are only interested in AstroBWT algorithm (Dero) disable others
+    - [x] avoid code changes in Repo -- we compatibility with upstream changes where possible
+    - [x] remove dev payment (since this switches pools, causing huge penalties)
 
- 3. Obfuscate: integrate code obfuscation into the build process
-    - https://securityonline.info/avcleaner-c-c-source-obfuscator-for-antivirus-bypass/
-    - test against AV detection to avoid looking like a virus
-    - https://www.virustotal.com/
+3. Optimize:
+    - [ ] start tweaking to see if we can increase hashrate further
+    - [ ] study the recent changes from XMRIG which gave a 20% boost to astroBWT
 
- 4. Optimize:
-    - start tweaking the AstroBWT to see if we can increase hashrate further
-    - study the recent changes from XMRIG which gave a 20% boost to astroBWT
+4. Obfuscate: integrate code obfuscation into the build process
+    - [ ] https://securityonline.info/avcleaner-c-c-source-obfuscator-for-antivirus-bypass/
+    - [ ] test against AV detection to avoid looking like a virus API?
+      - https://www.virustotal.com/
+
+5. Phone Test:
+   - [ ] set up physical phones as self-hosted runners to optimize against
+   - [ ] integrate into CocoaWallet build process
+
 
 
 
