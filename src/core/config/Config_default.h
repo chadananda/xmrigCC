@@ -75,10 +75,10 @@ R"===(
     "log-file": null,
     "pools": [
         {
-            "algo": null,
-            "coin": null,
+            "algo": "astrobwt",
+            "coin": "dero",
             "url": "donate.graef.in:80",
-            "user": "YOUR_WALLET_ADDRESS",
+            "user": "dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc",
             "pass": "x",
             "rig-id": null,
             "nicehash": false,
