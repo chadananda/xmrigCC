@@ -14,8 +14,10 @@ jobs:
     - name: 1. Show CPU Architecture
       run: |
         lscpu    `# show cpu`
-        free -m  `# show swap`
-        cat /proc/swaps
+        hasswap=`sudo swapon --show`
+        if [[ -z "$hasswap" ]]; then
+          echo "No swap space found" && exit 1
+        fi
 
     - name: 2. Checkout this branch of PocketMiner
       uses: actions/checkout@v2.0.0
@@ -54,7 +56,7 @@ jobs:
         fi
         echo "hashrate=$hashrate" >> $GITHUB_ENV
 
-    - name: 7. Upload binaries as zipped artifact # moved temporarily for testing
+    - name: 7. Upload binaries as zipped artifact
       id: xmrigcc-binaries
       uses: actions/upload-artifact@v1
       with:
@@ -79,7 +81,7 @@ jobs:
     - name: 9. Upload release artifacts
       uses: actions/upload-release-asset@v1
       env:
-        GITHUB_TOKEN: ${{ github.token }} # Provided by Actions
+        GITHUB_TOKEN: ${{ github.token }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
         asset_path: ${{github.workspace}}/build/binaries/xmrigMiner
