@@ -70,11 +70,12 @@ jobs:
         # echo "xmrigver=`./xmrigMiner --version --daemonized`" >> $GITHUB_ENV
 
         # run for 1 minute and output to file, capturing timeout error
-        sudo timeout 1m ./xmrigMiner $CONFIG  --daemonized 2>&1 | tee output.txt
+        sudo timeout 1m ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
         # strip color from file contents
-        cat output.txt | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > output.txt
+        cat output.txt | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > output2.txt
         # test uncolorized output.txt
-        cat output.txt
+        echo "Contents of output 2 (uncolorized): "
+        cat output2.txt
 
         # and what is our hashrate?
         hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
