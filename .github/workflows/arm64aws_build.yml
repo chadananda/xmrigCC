@@ -45,14 +45,13 @@ jobs:
     - name: 4. Build binaries
       uses: nicledomaS/cmake_build_action@v1.4
       with:
-        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include;-DWITH_CN_LITE=OFF;-DWITH_CN_HEAVY=OFF;-DWITH_CN_PICO=OFF;-DWITH_CN_FEMTO=OFF;-DWITH_RANDOMX=OFF;-DWITH_ARGON2=OFF;-DWITH_KAWPOW=OFF;-DWITH_SECURE_JIT=ON;-DARM_TARGET=8;-DWITH_HTTP=OFF;-DWITH_ASM=OFF;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_NVML=OFF;-DWITH_MSR=OFF;-DWITH_ADL=OFF;-DWITH_PROFILING=OFF;-DWITH_SSE4_1=OFF;-DWITH_BENCHMARK=OFF;-DWITH_DMI=OFF;-DWITH_EMBEDDED_CONFIG=ON
+        cmake_args: -DWITH_HWLOC=OFF;-DCMAKE_BUILD_TYPE=Release;-DXMRIG_DEPS=${{github.workspace}}/xmrig-deps/gcc/x64/include;-DWITH_CN_LITE=OFF;-DWITH_CN_HEAVY=OFF;-DWITH_CN_PICO=OFF;-DWITH_CN_FEMTO=OFF;-DWITH_RANDOMX=OFF;-DWITH_ARGON2=ON;-DWITH_KAWPOW=OFF;-DWITH_SECURE_JIT=ON;-DARM_TARGET=8;-DWITH_HTTP=OFF;-DWITH_ASM=OFF;-DWITH_OPENCL=OFF;-DWITH_CUDA=OFF;-DWITH_NVML=OFF;-DWITH_MSR=OFF;-DWITH_ADL=OFF;-DWITH_PROFILING=OFF;-DWITH_SSE4_1=OFF;-DWITH_BENCHMARK=OFF;-DWITH_DMI=OFF;-DWITH_EMBEDDED_CONFIG=ON
         submodule_update: ON
 
-    - name: 5. Gather binaries into 'build/binaries/' directory
+    - name: 5. Gather binaries & get binary size
       run: |
         cd ${{github.workspace}}/build/ && mkdir binaries/
-        mv xmrig* binaries/ && ls -la binaries/
-        cd binaries/
+        mv xmrig* binaries/ && cd binaries && ls -la
         echo "build_size=`du -sh xmrigMiner | sed 's/xmrigMiner//'`" >> $GITHUB_ENV
 
     - name: 6. Run xmrigMiner for 1 minute to see if it works
@@ -61,22 +60,16 @@ jobs:
         sudo chmod +x ./xmrigMiner
 
         # xmrig configuration
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --huge-pages=FALSE --huge-pages-jit=FALSE --astrobwt-max-size=1000 --cpu-memory-pool=-1 --cpu-no-yield --print-time=5 --retry-pause=1 --argon2-impl=AVX2'
+        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --astrobwt-max-size=1000 --astrobwt-avx2 --pause-on-battery --argon2-impl=AVX2 --huge-pages=TRUE --huge-pages-jit=TRUE --asm=auto --cpu-memory-pool=-1 --cpu-no-yield --print-time=8 --retry-pause=2'
 
         # ./xmrigMiner: unrecognized option '--pause-on-battery' (6.3.1+)
         # ./xmrigMiner: unrecognized option '--huge-pages=true'
         # ./xmrigMiner: unrecognized option '--huge-pages-jit=TRUE'
 
-        # first show the xmrig version
-        # echo "xmrigver=`./xmrigMiner --version --daemonized`" >> $GITHUB_ENV
-
         # run for 1 minute and output to file, capturing timeout error
         sudo timeout 1m ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
         # strip color from file contents
-        cat output.txt | ansi2txt > output2.txt
-        echo "has output.txt:"
-        # cat output2.txt
-        mv -f output2.txt output.txt
+        cat output.txt | ansi2txt > output2.txt && mv -f output2.txt output.txt
 
         # and what is our hashrate? go through and get the fastest
         cp ${{github.workspace}}/bin/gethashrate.sh gethashrate.sh
@@ -89,8 +82,7 @@ jobs:
         echo "Hashrate: `./gethashrate.sh`"
 
         # clean up files from binary archive
-        rm output.txt
-        rm gethashrate.sh
+        rm output.txt && rm gethashrate.sh
 
     - name: 7. Upload binaries as zipped artifact
       id: xmrigcc-binaries
