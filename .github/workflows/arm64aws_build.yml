@@ -59,17 +59,18 @@ jobs:
         cd ${{github.workspace}}/build/binaries/
         sudo chmod +x ./xmrigMiner
 
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --huge-pages=true --huge-pages-jit=TRUE --astrobwt-max-size=1000 --cpu-memory-pool=0 --print-time=5 --retry-pause=1 --daemonized --no-color'
+        # xmrig configuration
+        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --pause-on-battery --astrobwt-avx2 --huge-pages=true --huge-pages-jit=TRUE --astrobwt-max-size=1000 --cpu-memory-pool=0 --print-time=5 --retry-pause=1'
 
         # ./xmrigMiner: unrecognized option '--pause-on-battery' (6.3.1+)
         # ./xmrigMiner: unrecognized option '--huge-pages=true'
         # ./xmrigMiner: unrecognized option '--huge-pages-jit=TRUE'
 
         # first show the xmrig version
-        echo "xmrigversion=`./xmrigMiner --version`" >> $GITHUB_ENV
+        echo "xmrigver=`./xmrigMiner --version --daemonized`" >> $GITHUB_ENV
 
         # run for 1 minute and output to file, capturing timeout error
-        sudo timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
+        sudo timeout 1m ./xmrigMiner $CONFIG  --daemonized --no-color 2>&1 | tee output.txt
 
         # and what is our hashrate?
         hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
@@ -86,7 +87,7 @@ jobs:
 
         # experiment running benchmark
         echo ''
-        sudo ./xmrigMiner --bench=1
+        sudo ./xmrigMiner $CONFIG --daemonized --bench=1
 
     - name: 7. Upload binaries as zipped artifact
       id: xmrigcc-binaries
@@ -107,7 +108,7 @@ jobs:
           Release: ${{ github.event.head_commit.message }}
           - hashrate: ${{ env.hashrate }}
           - size: ${{ env.build_size }}
-          - XMRIG ver: ${{ env.xmrigversion }}
+          - XMRIG ver: ${{ env.xmrigver }}
 
       env:
         GITHUB_TOKEN: ${{ github.token }}
