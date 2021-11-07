@@ -23,7 +23,7 @@ jobs:
         hasswap=`sudo swapon --show`
         if [[ -z "$hasswap" ]]; then
           echo "** No swap space found, setting up swap directory."
-          sudo fallocate -l 500M /swapfile
+          sudo fallocate -l 1G /swapfile
           sudo chmod 600 /swapfile
           sudo mkswap /swapfile
           sudo swapon /swapfile
