@@ -38,6 +38,7 @@ jobs:
       run: |
         sudo apt -y update
         sudo apt -y install libuv1-dev build-essential cmake libmicrohttpd-dev libssl-dev
+        sudo apt -y install colorized-logs
 
     # cmake_build_action options at: https://github.com/marketplace/actions/build-c-project
     # replace this with a manual cmake process which customizes the build
@@ -72,28 +73,20 @@ jobs:
         # run for 1 minute and output to file, capturing timeout error
         sudo timeout 1m ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
         # strip color from file contents
-        cat output.txt | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g' > output2.txt
-        # test uncolorized output.txt
-        echo "Contents of output 2 (uncolorized): "
-        cat output2.txt
+        cat output.txt | ansi2txt > output.txt
 
-        # and what is our hashrate?
-        hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
+        # and what is our hashrate? go through and get the fastest
+        cp ${{github.workspace}}/bin/gethashrate.sh gethashrate.sh
+        echo "hashrate=`./gethashrate.sh`" >> $GITHUB_ENV
+        # hashrate=`grep "max" output.txt | tail -1` && hashrate=${hashrate##*max}
         if [[ -z "$hashrate" ]]; then
           echo "No hash activity found" && exit 1
         fi
-        # go through all hashrates in file and get the fastest
-        cp ${{github.workspace}}/bin/gethashrate.sh gethashrate.sh
         echo "Hashrate: `./gethashrate.sh`"
-        echo "hashrate=`./gethashrate.sh`" >> $GITHUB_ENV
 
         # clean up files from binary archive
-        # rm output.txt
+        rm output.txt
         rm gethashrate.sh
-
-        # experiment running benchmark
-        # echo ''
-        # sudo ./xmrigMiner $CONFIG --daemonized --bench=1
 
     - name: 7. Upload binaries as zipped artifact
       id: xmrigcc-binaries
