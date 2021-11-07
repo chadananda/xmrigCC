@@ -11,13 +11,18 @@ jobs:
 
     steps:
 
-    - name: 1. Show CPU Architecture
+    - name: 1. Show CPU architecture & setup swap
       run: |
         lscpu    `# show cpu`
         hasswap=`sudo swapon --show`
         if [[ -z "$hasswap" ]]; then
-          echo "No swap space found" && exit 1
+          echo "** No swap space found, setting up swap directory."
+          sudo fallocate -l 100M /swapfile
+          sudo chmod 600 /swapfile
+          sudo mkswap /swapfile
+          sudo swapon /swapfile
         fi
+        sudo swapon --show
 
     - name: 2. Checkout this branch of PocketMiner
       uses: actions/checkout@v2.0.0
