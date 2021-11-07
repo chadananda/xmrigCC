@@ -66,7 +66,7 @@ jobs:
         # ./xmrigMiner: unrecognized option '--huge-pages-jit=TRUE'
 
         # first show the xmrig version
-        echo "xmrig_version=`./xmrigMiner --version`"" >> $GITHUB_ENV
+        echo "xmrig_version=`./xmrigMiner --version`" >> $GITHUB_ENV
 
         # run for 1 minute and output to file, capturing timeout error
         sudo timeout 1m ./xmrigMiner $CONFIG 2>&1 | tee output.txt
