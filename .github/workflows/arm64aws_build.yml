@@ -13,8 +13,9 @@ jobs:
 
     - name: 1. Show CPU Architecture
       run: |
-        lscpu    # show cpu
-        free -m  # show swap
+        lscpu    `# show cpu`
+        free -m  `# show swap`
+        cat /proc/swaps
 
     - name: 2. Checkout this branch of PocketMiner
       uses: actions/checkout@v2.0.0
