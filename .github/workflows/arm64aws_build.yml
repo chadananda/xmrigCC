@@ -65,14 +65,14 @@ jobs:
         sudo chmod +x ./xmrigMiner
 
         # xmrig configuration
-        CONFIG=' -o ${{poolurl}} -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --astrobwt-max-size=${{maxbwt}} --astrobwt-avx2 --pause-on-battery --argon2-impl=AVX2 --huge-pages=TRUE --huge-pages-jit=TRUE --asm=auto --cpu-memory-pool=-1 --cpu-no-yield --print-time=8 --retry-pause=2'
+        CONFIG=' -o ${{env.poolurl}} -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --astrobwt-max-size=${{env.maxbwt}} --astrobwt-avx2 --pause-on-battery --argon2-impl=AVX2 --huge-pages=TRUE --huge-pages-jit=TRUE --asm=auto --cpu-memory-pool=-1 --cpu-no-yield --print-time=8 --retry-pause=2'
 
         # ./xmrigMiner: unrecognized option '--pause-on-battery' (6.3.1+)
         # ./xmrigMiner: unrecognized option '--huge-pages=true'
         # ./xmrigMiner: unrecognized option '--huge-pages-jit=TRUE'
 
         # run for 1 minute and output to file, capturing timeout error
-        sudo timeout ${{testtime}} ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
+        sudo timeout ${{env.testtime}} ./xmrigMiner $CONFIG --daemonized 2>&1 | tee output.txt
         # strip color from file contents
         cat output.txt | ansi2txt > output2.txt && mv -f output2.txt output.txt
 
