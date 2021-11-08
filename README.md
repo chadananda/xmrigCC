@@ -32,6 +32,15 @@
    - [ ] integrate into CocoaWallet build process
 
 
+## Releases
+
+ We only have one "latest" release because we are only targeting one phone platform (arm64-v8a). The latest release is here:
+ 
+# [Latest xmrigMiner Build](https://github.com/chadananda/pocketMiner/releases/latest/download/xmrigMiner)
+
+
+
+
 
 
 
