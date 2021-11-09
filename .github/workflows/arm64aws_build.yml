@@ -57,7 +57,7 @@ jobs:
 
     - name: 6. Run xmrigMiner for 1 minute to see if it works
       env:
-        poolurl: us.dero.herominers.com:11193664
+        poolurl: us.dero.herominers.com:1117
         maxbwt: 705
         testtime: 1m
       run: |
